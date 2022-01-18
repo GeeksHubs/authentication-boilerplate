@@ -1,17 +1,17 @@
 version: '3.7'
 
 services:
-  proxy:
-    image: nginx:alpine
-    container_name: proxy
-    ports:
-      - '80:80'
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-    restart: 'unless-stopped'
-    networks:
-      - backend
-  server:
+  # proxy:
+  #   image: nginx:alpine
+  #   container_name: proxy
+  #   ports:
+  #     - '80:80'
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf
+  #   restart: 'unless-stopped'
+  #   networks:
+  #     - backend
+  api-rest:
     build:
       context: ./
       target: development-build-stage
@@ -26,12 +26,12 @@ services:
     networks:
       - backend
     links:
-      - pg
+      - postgres
     depends_on:
-      - pg
-  pg:
+      - postgres
+  postgres:
     image: bitnami/postgresql:11-debian-9
-    container_name: pg
+    container_name: postgres
     environment:
       POSTGRESQL_USERNAME: root
       POSTGRESQL_PASSWORD: password
