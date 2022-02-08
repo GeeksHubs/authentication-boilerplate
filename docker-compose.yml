@@ -15,36 +15,22 @@ services:
     depends_on:
       - authentication_dev_db
 
-  front:
-    tty: true
-    restart: unless-stopped
-    container_name: authentication_front
-    build:
-      context: frontend
-      target: builder
-    command: sh -c 'npm start'
-    ports:
-      - '4200:4200'
-    volumes:
-      - "./frontend:/app"
-      - /app/node_modules
-    networks:
-      - authentication-network
+  # front:
+  #   tty: true
+  #   restart: unless-stopped
+  #   container_name: authentication_front
+  #   build:
+  #     context: frontend
+  #     target: builder
+  #   command: sh -c 'npm start'
+  #   ports:
+  #     - '4200:4200'
+  #   volumes:
+  #     - "./frontend:/app"
+  #     - /app/node_modules
+  #   networks:
+  #     - authentication-network
 
-  app_ionic:
-    tty: true
-    restart: unless-stopped
-    container_name: authentication_ionic
-    build:
-      context: app-ionic
-    command: sh -c 'npm start'
-    ports:
-      - '4201:4201'
-    volumes:
-      - "./app-ionic:/app"
-      - /app/node_modules
-    networks:
-      - authentication-network
 
   authentication_dev_db:
     image: mysql:5.7
@@ -52,8 +38,10 @@ services:
     restart: unless-stopped
     ports:
      - '3306:3306'
+    volumes:
+      - 'dbdata:/var/lib/mysql'
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: khj-aDSdlkh23423_123asd
       MYSQL_DATABASE: authentication_dev_db
     networks:
       - authentication-network
@@ -80,87 +68,7 @@ services:
       - authentication-network
 
 volumes:
-  portainerdata:
+  dbdata:
 networks:
   authentication-network:
     name: authentication-network
-
-
-
-
-# portainer:
-  #   image: portainer/portainer
-  #   container_name: authentication_portainer
-  #   volumes:
-  #     - "/var/run/docker.sock:/var/run/docker.sock"
-  #     - "portainerdata:/data"
-  #   ports:
-  #     - "9000:9000"
-
-  # ## BD GENERAL.
-  # db:
-  #   image: authentication_db
-  #   container_name: authentication_db
-  #   build:
-  #     context: bd
-  #     target: authentication_db
-  #   command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-  #   restart: unless-stopped
-  #   env_file:
-  #     - .env
-  #   ports:
-  #     - 3307:3306
-  #   volumes:
-  #     - ../db-data:/var/lib/mysql
-  #     - ./bd/init:/opt/bd
-  #   networks:
-  #     - authentication-network
-
-
-  # API
-  # api:
-  #   image: wyveo/nginx-php-fpm:php74
-  #   # build:
-  #   #   context: api/infrastructure/Geekshubs-php-fpm74-nginx
-  #   container_name: authentication_api
-  #   restart: unless-stopped
-  #   # labels:
-  #   #   logging: "enabled"
-  #   volumes:
-  #     - "./api:/usr/share/nginx/html"
-  #   ports:
-  #     - "8080:80"
-  #   networks:
-  #     - authentication-network
-
-
-
-
-  # authentication_php74:
-  #   container_name: authentication_php74
-  #   build:
-  #     context: api/infraestructure/php74-fpm
-  #     args:
-  #       TIMEZONE: Europe/Madrid
-
-  #   restart: always
-  #   volumes:
-  #     - ../app:/var/www/html
-  #   user: 1000:1000
-  #   networks:
-  #     - authentication-network
-
-  # authentication_apache:
-  #   container_name: authentication_apache
-  #   build:
-  #     context: api/infraestructure/apache
-  #     target: authentication_apache
-  #   links:
-  #     - authentication_php74
-  #   restart: 'always'
-  #   volumes:
-  #     - ../app:/var/www/html
-  #   ports:
-  #     - "8080:80"
-  #   networks:
-  #   - authentication-network

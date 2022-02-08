@@ -1,0 +1,4 @@
+@host=http://localhost:80
+###
+
+GET {{host}}/user
