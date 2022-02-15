@@ -30,6 +30,8 @@ services:
       - authentication-network
     volumes:
       - "./test-end2end/api:/test"
+    depends_on:
+      - authentication_api
   # front:
   #   tty: true
   #   restart: unless-stopped
