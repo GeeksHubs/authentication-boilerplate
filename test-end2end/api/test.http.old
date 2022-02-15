@@ -1,9 +1,14 @@
 # @host={{@dotenv API_HOST}} # REST-CLIENT
-@host={{API_HOST}}
 # @host=http://localhost:8080
+@host={{API_HOST}}
+
+{{
+  exports.RANDOM = Math.random();
+}}
+
 ###
 
-GET {{host}}/users
+GET /users
 
 {{
   test.status(404);
@@ -19,7 +24,7 @@ GET https://garn.dev/
 
 ###
 
-GET https://mock-api.deno.dev/?status=301
+GET https://mock-api.deno.dev/?status=302&body={{RANDOM}}
 
 {{
   test.status(302);
@@ -49,4 +54,24 @@ GET https://mock-api.deno.dev/?headers={"content-type":"application/json"}&body=
   test.header("content-type", "application/json");
   test.responseBody('{"hello":"world"}');
   test.status(200);
+}}
+
+###
+
+POST https://mock-api.deno.dev/?headers={"content-type":"application/json"}&body={"hello":"world"}
+Accept: application/json
+Content-Type: application/json
+
+{"hola":"mundo"}
+
+
+{{
+  const { equal } = require('assert');
+  test('status code 200', () => {
+    equal(response.statusCode, 200);
+  });
+
+  test('status body', async() => {
+    equal(await response.json(), {hola:"mundo"});
+  });
 }}

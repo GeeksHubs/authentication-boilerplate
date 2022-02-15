@@ -1,0 +1,62 @@
+@host={{API_HOST}}
+
+###
+
+POST /auth/signup
+Content-Type:application/json
+
+{
+  "email": "juan@geekshubs.com",
+  "password": "Pa$$word952!"
+}
+
+{{
+  test.status(200);
+}}
+
+###
+
+
+POST /auth/signup
+Content-Type:application/json
+
+{
+  "email": "juangeekshubs.com",
+  "password": "Pa$$word952!"
+}
+
+{{
+  test.status(422);
+}}
+
+###
+
+
+POST /auth/signup
+Content-Type:application/json
+
+{
+  "email": "juan@geekshubs.com",
+  "password": "1234"
+}
+
+{{
+  test.status(422);
+}}
+
+###
+
+
+POST /auth/signup
+Content-Type:application/json
+
+{
+  "email": "email@en.uso",
+  "password": "Pa$$word952!"
+}
+
+{{
+  test.status(409);
+}}
+
+###
