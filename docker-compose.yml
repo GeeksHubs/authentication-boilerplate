@@ -1,13 +1,15 @@
 version: '3.6'
 services:
-  api:
+  authentication_api:
+    image: 'geekshubs/geekshubs-php-fom80-nginx'
     # image: php:7.4-apache
-    build:
-      context: api
+
+    # build:
+    #   context: api
     container_name: authentication_api
     restart: unless-stopped
     volumes:
-      - "./api:/var/www/html"
+      - "./api:/var/www"
     ports:
       - "8080:80"
     networks:
@@ -15,6 +17,16 @@ services:
     depends_on:
       - authentication_dev_db
 
+  # api:
+  #     image: 'geekshubs/geekshubs-php-fom80-nginx'
+  #     container_name: pcex_api
+  #     restart: on-failure
+  #     labels:
+  #       logging: "enabled"
+  #     volumes:
+  #       - ${DIRECTORY_WEB_API_GATEWAY}:/var/www
+  #     ports:
+  #       - "8080:80"
   # front:
   #   tty: true
   #   restart: unless-stopped
