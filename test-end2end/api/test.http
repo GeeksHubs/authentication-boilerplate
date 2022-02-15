@@ -1,4 +1,4 @@
-# @host={{@dotenv API_HOST}}
+# @host={{@dotenv API_HOST}} # REST-CLIENT
 @host={{API_HOST}}
 # @host=http://localhost:8080
 ###
