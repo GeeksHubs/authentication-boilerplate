@@ -1,5 +1,9 @@
 import { assertEquals } from "https://deno.land/std@0.125.0/testing/asserts.ts";
-// https://deno.land/std@0.125.0/testing
+import { config } from "https://deno.land/x/dotenv@v3.2.0/mod.ts";
+
+const { API_HOST } = config({ path: "./production.env" });
+console.log({API_HOST});
+
 
 Deno.test('mock', async () => {
     const response = await fetch('https://mock-api.deno.dev/?body=hola');
@@ -10,9 +14,10 @@ Deno.test('mock', async () => {
 
 Deno.test({
     name: 'localhost',
-    ignore:true,
+    ignore: false,
     fn: async () => {
-        const response = await fetch('http://localhost:8080/api/test')
+        const response = await fetch(API_HOST + '/users');
+        await response.body.cancel();
         assertEquals(response.status, 200);
     }
 })

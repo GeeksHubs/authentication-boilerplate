@@ -21,25 +21,15 @@ services:
     container_name: test-deno
     command: deno test --allow-all
     volumes:
-      - "./test-end2end:/test"
+      - "./test-end2end/api:/test"
   test-end2end:
     build:
-      context: test-end2end
+      context: test-end2end/api
     container_name: test-end2end
     networks:
       - authentication-network
     volumes:
-      - "./test-end2end:/test"
-  # api:
-  #     image: 'geekshubs/geekshubs-php-fom80-nginx'
-  #     container_name: pcex_api
-  #     restart: on-failure
-  #     labels:
-  #       logging: "enabled"
-  #     volumes:
-  #       - ${DIRECTORY_WEB_API_GATEWAY}:/var/www
-  #     ports:
-  #       - "8080:80"
+      - "./test-end2end/api:/test"
   # front:
   #   tty: true
   #   restart: unless-stopped
