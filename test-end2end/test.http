@@ -1,8 +1,52 @@
-@host=http://localhost:8080
+# @host={{@dotenv API_HOST}}
+@host={{API_HOST}}
+# @host=http://localhost:8080
 ###
 
-GET {{host}}/
+GET {{host}}/users
+
+{{
+  test.status(404);
+}}
+
+###
+GET https://garn.dev/
+
+
+{{
+  test.status(201);
+}}
 
 ###
 
-GET https://www.google.com/
+GET https://mock-api.deno.dev/?status=301
+
+{{
+  test.status(302);
+}}
+
+###
+
+GET https://mock-api.deno.dev/?body=hola
+
+{{
+  test.responseBody("hola");
+}}
+
+###
+GET https://mock-api.deno.dev/?headers={"x-hello":"world"}
+
+{{
+  test.header("x-hello", "world");
+}}
+
+
+
+###
+GET https://mock-api.deno.dev/?headers={"content-type":"application/json"}&body={"hello":"world"}
+
+{{
+  test.header("content-type", "application/json");
+  test.responseBody('{"hello":"world"}');
+  test.status(200);
+}}

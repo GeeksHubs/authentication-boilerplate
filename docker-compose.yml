@@ -16,7 +16,14 @@ services:
       - authentication-network
     depends_on:
       - authentication_dev_db
-
+  test-end2end:
+    build:
+      context: test-end2end
+    container_name: test-end2end
+    networks:
+      - authentication-network
+    volumes:
+      - "./test-end2end:/test"
   # api:
   #     image: 'geekshubs/geekshubs-php-fom80-nginx'
   #     container_name: pcex_api
