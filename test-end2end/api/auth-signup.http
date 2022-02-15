@@ -1,5 +1,6 @@
 @host={{API_HOST}}
 
+
 ###
 
 POST /auth/signup
@@ -56,7 +57,17 @@ Content-Type:application/json
 }
 
 {{
-  test.status(409);
+  // test.status(409);
+  const { equal } = require('assert');
+  test('status code 409', () => {
+    equal(response.statusCode,409)
+  });
+
+  test('body has error', async () => {
+      const body = await response.json();
+      // expect(body).to.have.property('errors');
+      equal(body.error.length,3);
+  });
 }}
 
 ###
