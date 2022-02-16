@@ -1,4 +1,7 @@
 FROM node:17-alpine
 RUN npm i -g httpyac
 WORKDIR /test
-CMD ["httpyac", "**/*.http", "--all","-e", "production", "-o", "short" ]
+ENV NODE_ENV=production
+COPY . .
+# CMD ["httpyac", "**/*.http", "--all","-e", "production", "-o", "short" ]
+CMD ["httpyac","send", "**/*.http", "--all","-e", "production", "-o", "exchange"]

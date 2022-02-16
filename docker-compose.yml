@@ -2,6 +2,7 @@ version: '3.6'
 services:
   authentication_api:
     image: 'geekshubs/geekshubs-php-fom80-nginx'
+
     # image: php:7.4-apache
 
     # build:
@@ -32,6 +33,8 @@ services:
       - "./test-end2end/api:/test"
     depends_on:
       - authentication_api
+    command: httpyac send **/*.http --all --env production --output-failed exchange --output none
+
   # front:
   #   tty: true
   #   restart: unless-stopped
