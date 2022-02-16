@@ -1,2 +1,2 @@
 - [ ] API make stateless image for laravel with composer install during build and maybe run migrations
-- [ ] TEST create watch model
+- [x] TEST create watch model

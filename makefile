@@ -3,5 +3,5 @@ test:
 
 test-watch:
 	npx nodemon --watch ./test-end2end/api/http --watch ./api/app --exec "make test"
-test-manual:
-	npx httpyac send **/*.http --all --output-failed exchange --output none
+test-deno:
+	docker-compose run --rm test-deno

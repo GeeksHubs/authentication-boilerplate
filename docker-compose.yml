@@ -18,11 +18,12 @@ services:
     depends_on:
       - authentication_dev_db
   test-deno:
-    image: denoland/deno
+    build:
+      context: test-end2end/api/deno
     container_name: test-deno
-    command: deno test --allow-all
+    # command: deno test --allow-all
     volumes:
-      - "./test-end2end/api:/test"
+      - "./test-end2end/api/deno:/test"
   test-end2end:
     build:
       context: test-end2end/api

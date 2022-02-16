@@ -1,8 +1,7 @@
-import { assertEquals } from "https://deno.land/std@0.125.0/testing/asserts.ts";
-import { config } from "https://deno.land/x/dotenv@v3.2.0/mod.ts";
+import { assertEquals, config } from "./deps.js";
 
-const { API_HOST } = config({ path: "./production.env" });
-console.log({API_HOST});
+const { API_HOST } = config({ path: "./.env" });
+console.log({ API_HOST });
 
 
 // Deno.test('mock', async () => {
