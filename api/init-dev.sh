@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+echo "--------------------------"
+echo "Runnnig init.sh"
+echo "--------------------------"
+
 # Rename .env init DockerCompose
 #echo "Rename Variable init"
 #cp .env.example .env
@@ -26,6 +30,7 @@
 #####################################################################
 ###                   API                                        ####
 #####################################################################
+
 echo "--------------------------"
 echo "CREATE API"
 echo "--------------------------"
@@ -42,8 +47,9 @@ docker exec -ti authentication_api  sh -c "php artisan key:generate"
 echo "Create Migration"
 docker exec -ti authentication_api  sh -c "php artisan migrate:fresh"
 #Execute Seeder.
-echo "Execute Seeder"
-docker exec -ti  authentication_api  sh -c "php artisan db:seed"
+# echo "Execute Seeder"
+# docker exec -ti  authentication_api  sh -c "php artisan db:seed"
+
 #Add permisions
 echo "Add permision to logs"
 docker exec -ti authentication_api  sh -c "chown -R www-data:www-data storage"

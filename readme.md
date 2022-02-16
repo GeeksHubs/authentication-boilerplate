@@ -8,7 +8,7 @@ more features https://httpyac.github.io
 
 
 ```sh
-docker-compose run --rm test-end2end
+docker-compose run --rm test-http
 ```
 
 

@@ -1,22 +1,30 @@
 version: '3.6'
 services:
   authentication_api:
-    image: 'geekshubs/geekshubs-php-fom80-nginx'
-
-    # image: php:7.4-apache
-
-    # build:
-    #   context: api
+    build:
+      context: api
     container_name: authentication_api
     restart: unless-stopped
+    # depends_on:
+    #   authentication_dev_db:
+    #     condition: service_healthy
+    depends_on:
+      - authentication_dev_db
+
     volumes:
       - "./api:/var/www"
     ports:
       - "8080:80"
     networks:
       - authentication-network
-    depends_on:
-      - authentication_dev_db
+    healthcheck:
+      # test: ["CMD", "wget", "--no-verbose", "--tries=1",  "http://localhost:80"]
+      # test: wget --no-verbose --tries=1 --spider http://localhost:80 || exit 1
+      test: curl --fail http://localhost:80 || exit 1
+      retries: 4
+      timeout: 2s
+      start_period: 5s
+
   test-deno:
     build:
       context: test-end2end/api/deno
@@ -24,16 +32,21 @@ services:
     # command: deno test --allow-all
     volumes:
       - "./test-end2end/api/deno:/test"
-  test-end2end:
+    depends_on:
+      authentication_api:
+        condition: service_healthy
+
+  test-http:
     build:
-      context: test-end2end/api
+      context: test-end2end/api/http
     container_name: test-end2end
     networks:
       - authentication-network
     volumes:
       - "./test-end2end/api:/test"
     depends_on:
-      - authentication_api
+      authentication_api:
+        condition: service_healthy
     command: httpyac send **/*.http --all --env production --output-failed exchange --output none
 
   # front:
@@ -57,6 +70,11 @@ services:
     image: mysql:5.7
     container_name: authentication_dev_db
     restart: unless-stopped
+    # healthcheck:
+    #   test: mysqladmin ping -pkhj-aDSdlkh23423_123asd || exit 1
+    #   retries: 4
+    #   timeout: 2s
+    #   start_period: 1s
     ports:
      - '3306:3306'
     volumes:
@@ -66,6 +84,7 @@ services:
       MYSQL_DATABASE: authentication_dev_db
     networks:
       - authentication-network
+
 
   authentication_adminer:
     image: adminer
@@ -85,6 +104,7 @@ services:
     image: maildev/maildev
     ports:
       - "1080:80"
+      # - "1025:1025"
     networks:
       - authentication-network
 
