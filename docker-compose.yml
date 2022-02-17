@@ -21,29 +21,29 @@ services:
       # test: ["CMD", "wget", "--no-verbose", "--tries=1",  "http://localhost:80"]
       # test: wget --no-verbose --tries=1 --spider http://localhost:80 || exit 1
       test: curl --fail http://localhost:80 || exit 1
-      retries: 4
-      timeout: 2s
-      start_period: 5s
+      retries: 1
+      timeout: 1s
+      start_period: 0s
 
   test-deno:
     build:
-      context: test-end2end/api/deno
+      context: tests/api/deno
     container_name: test-deno
     # command: deno test --allow-all
     volumes:
-      - "./test-end2end/api/deno:/test"
+      - "./tests/api/deno:/test"
     depends_on:
       authentication_api:
         condition: service_healthy
 
   test-http:
     build:
-      context: test-end2end/api/http
-    container_name: test-end2end
+      context: tests/api/http
+    container_name: tests
     networks:
       - authentication-network
     volumes:
-      - "./test-end2end/api:/test"
+      - "./tests/api:/test"
     depends_on:
       authentication_api:
         condition: service_healthy
