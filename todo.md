@@ -1,3 +1,4 @@
 - [x] API make stateless image for laravel with composer install during build and maybe run migrations
 - [x] TEST create watch model
-- [ ] TEST fix watch model stout with color
+- [X] TEST fix watch model stout with color
+- [ ] TEST add ci testing on push

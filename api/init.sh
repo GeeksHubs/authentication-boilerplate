@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+sleep 5
 echo "--------------------------"
 echo "Runnnig init.sh"
 echo "--------------------------"
@@ -6,7 +7,6 @@ echo "--------------------------"
 #####################################################################
 ###                   API                                        ####
 #####################################################################
-
 echo "--------------------------"
 echo "CREATE API"
 echo "--------------------------"
@@ -15,7 +15,7 @@ echo "Install Composer"
 COMPOSER_MEMORY_LIMIT=-1 composer install
 # Rename .env
 echo "Create .env"
-# cp .env.example .env
+ls .env || cp .env.example .env
 #Create encription key.
 echo "Create Encription Key"
 php artisan key:generate
@@ -37,8 +37,9 @@ chmod -R 777 bootstrap/cache
 #Generate api Doc
 # php artisan l5-swagger:generate
 #Ejecute create JWT Key
-#echo "Add jwt Key"
-#php artisan jwt:secret
+# echo "Add jwt Key"
+# php artisan jwt:secret
+
 
 
 echo 'RUN entrypoint from the base image'
