@@ -3,5 +3,4 @@ RUN npm i -g httpyac
 WORKDIR /test
 ENV NODE_ENV=production
 COPY . .
-# CMD ["httpyac", "**/*.http", "--all","-e", "production", "-o", "short" ]
 CMD ["httpyac","send", "**/*.http", "--all","-e", "production", "-o", "exchange"]
