@@ -1,9 +1,58 @@
-@host={{MAILDEV_HOST}}
 
+@host={{MAILDEV_HOST}}
+# @ref allMails
+@lastMailId={{allMails[0].id}}
+
+{{
+  console.log({lastMailId});
+}}
 
 ###
-GET /
+GET /healthz
 
 {{
   test.status(200);
 }}
+
+###
+# @name allMails
+
+GET /email
+
+{{
+  // console.log(httpRegion);
+}}
+
+###
+# @description Delete all emails
+# @note Are you sure?
+DELETE /email/all
+
+###
+# @description Get a given email by id
+GET /email/{{lastMailId}}
+
+###
+# @description Delete a given email by id
+# @forceRef allMails
+DELETE /email/{{lastMailId}}
+
+###
+# @description Get a given emails html body
+GET /email/{{lastMailId}}/html
+
+###
+# @description Get a given email's file attachment.
+GET /email/{{lastMailId}}/attachment/:filename
+
+###
+# @description If configured, relay a given email to it's real "to" address.
+POST /email/{{lastMailId}}/relay
+
+###
+# @description Get the application configuration.
+GET /config
+
+###
+# @description Health check
+GET /healthz
