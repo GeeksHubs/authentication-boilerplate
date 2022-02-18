@@ -99,14 +99,20 @@ services:
   #   networks:
   #     - authentication-network
 
-  # maildev:
-  #   image: maildev/maildev
-  #   container_name: maildev
-  #   ports:
-  #     - "1080:80"
-  #     - "1025:1025"
-  #   networks:
-  #     - authentication-network
+  maildev:
+    image: maildev/maildev
+    container_name: maildev
+    ports:
+      - "1080:80"
+      - "1025:25"
+    networks:
+      - authentication-network
+    healthcheck:
+      test: wget --spider http://localhost:80 || exit 1
+      interval: 2s
+      retries: 5
+      start_period: 5s
+      timeout: 1s
 
 volumes:
   dbdata:

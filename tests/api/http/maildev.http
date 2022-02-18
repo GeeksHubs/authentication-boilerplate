@@ -1,0 +1,9 @@
+@host={{MAILDEV_HOST}}
+
+
+###
+GET /
+
+{{
+  test.status(200);
+}}

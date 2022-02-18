@@ -18,7 +18,7 @@ Deno.test('mock', async () => {
 
 Deno.test({
     name: 'localhost',
-    ignore: false,
+    ignore: true,
     fn: async () => {
         const response = await fetch(API_HOST + '/users');
         await response.body.cancel();
