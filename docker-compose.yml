@@ -6,6 +6,8 @@ services:
     container_name: authentication_api
     restart: unless-stopped
     depends_on:
+      maildev:
+        condition: service_healthy
       authentication_dev_db:
         condition: service_healthy
     volumes:
